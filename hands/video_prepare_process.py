@@ -30,51 +30,6 @@ import sys
 import cv2
 import time
 
-
-# def im2tensor(im):#, network_input_size):
-#     # global network_input_size
-#     # im = cv2.resize(im, network_input_size)
-#     im = im[...,::-1]  # bgr to rgb
-#     im = np.transpose(im, (2,0,1)) # y,x,c => c,y,x
-#     t = torch.tensor(np.ascontiguousarray(im))
-#     t = t.float().div_(255)
-#     return t
-
-
-
-# def im_crop_32_center(im, square=False):
-#     shape = im.shape[:2]
-#     y, x = shape
-#     if square:
-#         size = min(shape)
-#         dy = (y-size)//2
-#         dx = (x-size)//2
-#         return im[dy:dy+size, dx:dx+size]
-#     else:
-#         dy = (y%32)/2
-#         dx = (x%32)/2
-#         return im[math.floor(dy):y-math.ceil(dy), math.floor(dx):x-math.ceil(dx)]
-
-
-# def im_crop_and_resize(im, size_or_sizes, return_crop_pad_size = False):
-#     square = isinstance(size_or_sizes, tuple)
-#     size = size_or_sizes if square else (size_or_sizes, size_or_sizes)
-
-#     resize_ratio = (size[0]/im.shape[0], size[1]/im.shape[1])
-#     resize_ratio = max(resize_ratio)
-#     assert resize_ratio <= 1, f"Video input should be at least as big as network input. video:{im.shape} >= model:{size}."
-#     # assert min(im_input.shape[:-1]) >= size, f"Video input should be at least as big as network input. tensor:{im_input.shape} >= input:{self.size}."
-
-#     im_resized = cv2.resize(im, (round(im.shape[1]*resize_ratio), round(im.shape[0]*resize_ratio)))
-#     im = im_crop_32_center(im_resized, square=square)
-
-#     if return_crop_pad_size:
-#         return im, np.array([(im_resized.shape[0] - im.shape[0])//2, (im_resized.shape[1] - im.shape[1])//2])
-#     else:
-#         return im
-
-
-
 class VideoCaptureFile(cv2.VideoCapture):
     def __init__(self, s, size):
         super().__init__(s)

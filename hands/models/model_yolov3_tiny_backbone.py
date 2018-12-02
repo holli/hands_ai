@@ -1,9 +1,9 @@
 from hands.basics import *
 #from hands.data import *
 #from hands.multiloss import *
-import yolov3_pytorch.yolov3_tiny
-from yolov3_pytorch.yolov3_tiny import Yolov3TinyBackbone
-from yolov3_pytorch.yolov3_base import Upsample
+# import yolov3_pytorch.yolov3_tiny
+# from yolov3_pytorch.yolov3_tiny import Yolov3TinyBackbone
+# from yolov3_pytorch.yolov3_base import Upsample
 
 
 

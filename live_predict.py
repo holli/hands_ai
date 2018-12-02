@@ -13,13 +13,13 @@ import argparse
 
 from hands.basics import *
 from hands.utils import *
-from hands.models.model_yolov3_tiny_backbone import *
-from hands.models.model_yolov3_plain_darknet import *
+# from hands.models.model_yolov3_tiny_backbone import *
+# from hands.models.model_yolov3_plain_darknet import *
 from hands.models.model_darknet_customized import *
 import cv2
 import collections
 
-from video_prepare_process import *
+from hands.video_prepare_process import *
 
 def cv2_arrow(im, xy_start, xy_end, color, line_width, arrow_length=20):
     # cv2.line(im_display, (lab[1], lab[2]),(lab[3], lab[4]), (255,0,0), 2)
@@ -35,18 +35,18 @@ def cv2_arrow(im, xy_start, xy_end, color, line_width, arrow_length=20):
     cv2.line(im, (x2, y2), xy_end, color, line_width)
 
 
-from phue_custom import Bridge
 def main(cap, model, display_size, display_size_screen=1, display_output=True, cuda=True,
-         stabilize_frames_c=0, record_fname='output.avi'):
+         stabilize_frames_c=0, record_fname='output.avi', hue_lights=False):
 
-    hue_ip = '192.168.1.102'
-    print(hue_ip)
-    b = Bridge(hue_ip)
-    b.connect()
-    b_wait = 0
-    b_wait_max = 4
-    
-    
+    if hue_lights:
+        from phue_custom import Bridge
+        hue_ip = '192.168.1.102'
+        print(f"Using hue bridge at ip {hue_ip}")
+        hue_b = Bridge(hue_ip)
+        hue_b.connect()
+        hue_b_wait = 0
+        hue_b_wait_max = 4
+
     debug_i = 0
     sleep_time = .0
     fps_timer_arr = [0] * 32
@@ -190,13 +190,14 @@ def main(cap, model, display_size, display_size_screen=1, display_output=True, c
 
                 if label_s in ('one', 'two', 'three', 'four'):
                     command_str += f"Setting mode {label_s}"
-                    if label_s == 'one':
-                        b.activate_scene('1',  '2Ag8NvbZKbfbSnb') # Demo1
-                    if label_s == 'two':
-                        b.activate_scene('1',  'GtGEYxbOCAsdnEr') # Arctic
-                    if label_s == 'three':
-                        b.activate_scene('1',  'vD9ehQd-CxgWN2V') # Bright
-                    b_wait = b_wait_max
+                    if hue_lights:
+                        if label_s == 'one':
+                            hue_b.activate_scene('1',  '2Ag8NvbZKbfbSnb') # Demo1
+                        if label_s == 'two':
+                            hue_b.activate_scene('1',  'GtGEYxbOCAsdnEr') # Arctic
+                        if label_s == 'three':
+                            hue_b.activate_scene('1',  'vD9ehQd-CxgWN2V') # Bright
+                        hue_b_wait = hue_b_wait_max
 
                 if label_s == 'thumbs_up' and record_cap and record_stop >= 0:
                     command_str += f"Thumbs up: Stopping recording. "
@@ -213,14 +214,15 @@ def main(cap, model, display_size, display_size_screen=1, display_output=True, c
                         # cv2.putText(im_display, point_info, (xy[0]-10, xy[1]+30+20+20), cv2.FONT_HERSHEY_SIMPLEX, 0.6, (255,255,255), 1)
                         if hit:
                             cv2.circle(im_display, tuple(p[:2]), p[2], (255,255,255), thickness=5, )
-                            if label_s == 'finger_point':
-                                command_str += f"Off {p[-1]}. "
-                                for idx in p[-1]: b.get_light_objects()[idx].on = False
-                                b_wait = b_wait_max
-                            elif label_s == 'finger_gun':
-                                command_str += f"On {p[-1]}. "
-                                for idx in p[-1]: b.get_light_objects()[idx].on = True                                
-                                b_wait = b_wait_max
+                            if hue_lights:
+                                if label_s == 'finger_point':
+                                    command_str += f"Off {p[-1]}. "
+                                    for idx in p[-1]: b.get_light_objects()[idx].on = False
+                                    hue_b_wait = hue_b_wait_max
+                                elif label_s == 'finger_gun':
+                                    command_str += f"On {p[-1]}. "
+                                    for idx in p[-1]: b.get_light_objects()[idx].on = True
+                                    hue_b_wait = hue_b_wait_max
 
 
             #############################################
@@ -241,7 +243,7 @@ def main(cap, model, display_size, display_size_screen=1, display_output=True, c
             im_display_screen = cv2.resize(im_display,
                                     (int(im_display.shape[1]*display_size_screen), int(im_display.shape[0]*display_size_screen)))
             cv2.imshow('display', im_display_screen)
-            
+
         else:
             for label_i, x, y, dx, dy, obj_p, label_p in results:
                 info_str += " - {} ({:.2f} > {:.2f})".format(class_names[label_i], obj_p, label_p)
@@ -255,7 +257,7 @@ def main(cap, model, display_size, display_size_screen=1, display_output=True, c
         fps_timer_arr[debug_i%16] = time.perf_counter() - fps_time_begin
         fps = int(len(fps_timer_arr) * 1 / sum(fps_timer_arr))
         first_process = False
-        b_wait = max(0, b_wait-1)
+        if hue_lights: b_wait = max(0, b_wait-1)
 
     if record_cap: record_cap.release()
     # cap.release()
@@ -273,7 +275,7 @@ if __name__ == "__main__":
     # --cap_args 3 1280 4 720 --img_size 416 736
     # --cap_args 3 640 4 480 --img_size 320 416
 
-    default_model = "ModelYoloV3TinyBackboneWithUp.load_default_416()"
+    default_model = "ModelDarknetCustomized.load_default_03_320()"
 
     parser = argparse.ArgumentParser(description='Live prediction with hands models.')
     parser.add_argument('-i', '--input', default='cv2video0', help='cv2video0/9, gstreamer, file')#, default="cv2.VideoCapture(0)")
