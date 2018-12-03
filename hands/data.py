@@ -1,42 +1,8 @@
 from hands.basics import *
 
-# import numpy as np
-# import matplotlib.pyplot as plt
-# from matplotlib import patches, patheffects
-# import glob
-# import pathlib
-# import time
-# import random
-# import json
-# import math
-# import pickle
-# import pdb
-# from collections import OrderedDict, Iterable, defaultdict
-# import sklearn
-# from sklearn import preprocessing
-
-# import torch
-# #from torch import *
-# from torch import ByteTensor, DoubleTensor, FloatTensor, HalfTensor, LongTensor, ShortTensor, Tensor, tensor
-# import torch.optim as optim
-# import torch.nn as nn
-# import torch.nn.functional as F
-# import torchvision
-# from torch.utils.data import Dataset, DataLoader
-# # from torchvision import datasets, transforms
-# # from torchvision import transforms, utils
-
-# import fastai
-# #import fastai.vision
-# #from fastai import vision
-# #from fastai.vision.image import *
-
 # _ = torch.manual_seed(42); np.random.seed(42); random.seed(42)
 import sklearn
 import functools
-
-
-data_path = pathlib.Path('/home/ohu/koodi/kesken/hands/custom_01/data')
 
 
 def get_default_databunch(img_fnames_arr, tfms_arr=None, size=224, max_lines=None, bs=32):
@@ -68,7 +34,7 @@ def get_default_databunch(img_fnames_arr, tfms_arr=None, size=224, max_lines=Non
 
 
 class HandsDataset(Dataset):
-    def __init__(self, fnames, tfms=None, size=224, return_data=True, img_padding_mode='zeros'):
+    def __init__(self, fnames, tfms=None, size, return_data=True, img_padding_mode='zeros'):
         self.fnames = fnames
         self.tfms = tfms
         self.size = size
