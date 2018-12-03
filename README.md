@@ -15,7 +15,7 @@ Recognizing hands and point direction in images.
 
 ## Examples
 
-**Using to control lights**
+**Using to control lights** (Deployed to Jetson tx2 with infrared video camera)
 
 ![Hue stuff](https://uc2d29f43de42ca7a41b4f66a48f.previews.dropboxusercontent.com/p/orig/AAQaqFTi336ag9zVpWGhPaWU6yP9HyBfV9VzUN75h6DXQgi3kB4RHilBgIzPmCkgCaEZJGzfcjgpjZ_T3sNfBgEbgt9i9WNWBAfcFyeHWylqaR2BI0Fo33njsnEk1LYXVi2jRo0d38VHuix4Hun1EuFz0oESh7sZ8q7NQFKxW7WAmgRhIQuZy-AwzfrhAFcp1yiobfOnxBwdad70m8MSkb5s/p.gif?size=416x320&size_mode=3)
 
@@ -28,10 +28,14 @@ Recognizing hands and point direction in images.
 #### Models
 
 - See notebooks at ... to see how they were trained and how effetive they are
+  - ... Bigger network
+  - ... Smaller - Can be run in Jetson tx2 in realtime
+- Basically model is cnn which outputs (x, y, &#238;, &#309;, objectness, p_class_1, p_class_2, ...).
+  - much like [Yolo](https://pjreddie.com/darknet/yolo/) but with angle instead of bounding boxes.
 
 #### Data
 
-Data not available currently. Maybe some day. I'll have to clean it (I don't want to explain my nephews mother why there is a video of her son pointing at things.)
+Data not available currently. Maybe some day. I'll have to clean it (I don't want to explain my nephew's mother why there is a video of her son pointing at things in the Internet.)
 
 - Data labeling related tools are at [label_tools](https://github.com/holli/hands_ai/tree/master/label_tools) folder.
 - See notebook at ... for some examples
