@@ -16,7 +16,12 @@ Recognizing hands and point direction in images.
 ## Examples
 
 **Using to control lights**
+
 ![Hue stuff](https://uc2d29f43de42ca7a41b4f66a48f.previews.dropboxusercontent.com/p/orig/AAQaqFTi336ag9zVpWGhPaWU6yP9HyBfV9VzUN75h6DXQgi3kB4RHilBgIzPmCkgCaEZJGzfcjgpjZ_T3sNfBgEbgt9i9WNWBAfcFyeHWylqaR2BI0Fo33njsnEk1LYXVi2jRo0d38VHuix4Hun1EuFz0oESh7sZ8q7NQFKxW7WAmgRhIQuZy-AwzfrhAFcp1yiobfOnxBwdad70m8MSkb5s/p.gif?size=416x320&size_mode=3)
+
+**Classes it recognizes**
+
+...
 
 ## Pretrained models and data
 
