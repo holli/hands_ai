@@ -34,7 +34,7 @@ def get_default_databunch(img_fnames_arr, tfms_arr=None, size=224, max_lines=Non
 
 
 class HandsDataset(Dataset):
-    def __init__(self, fnames, tfms=None, size, return_data=True, img_padding_mode='zeros'):
+    def __init__(self, fnames, size, tfms=None, return_data=True, img_padding_mode='zeros'):
         self.fnames = fnames
         self.tfms = tfms
         self.size = size
