@@ -66,7 +66,8 @@ def main(cap, model, display_size, display_size_screen=1, display_output=True, c
     class_colors = ((0,0,0), (255,0,0), (0,255,0), (0,0,255), (255,0,255))
     text_color = (255,255,255)
 
-    pointing_targets = [[0, -.2, .4, [2]], [.68, .1, .2, [1, 3]], [.95, .56, .2, [0]]] # x, y, r, id
+    pointing_targets = []
+    #pointing_targets = [[0, -.2, .4, [2]], [.68, .1, .2, [1, 3]], [.95, .56, .2, [0]]] # x, y, r, id
     # for p in pointing_targets: p[0:3] = [int(x) for x in [p[0]*im_display.shape[1], p[1]*im_display.shape[0], p[2]*im_display.shape[0]]]
 
     record_cap, record_start, record_stop = False, 0, 0
@@ -157,7 +158,7 @@ def main(cap, model, display_size, display_size_screen=1, display_output=True, c
         info_str = ""
         if cap_is_file:
             info_str = f"f{int(cap_frame)}. "
-        #info_str += f"Fps {fps}. "
+        info_str += f"Fps {fps}. "
         if sleep_time: info_str += "Sleep_time {:.2}. ".format(sleep_time)
         if record_cap:
             if record_stop > 0: info_str += f"Ending recording in {record_stop}. "
@@ -168,7 +169,11 @@ def main(cap, model, display_size, display_size_screen=1, display_output=True, c
         if display_output:
             # im_display = cv2.resize(im_input, (display_size, display_size))
             im_display = cv2.resize(im_input, (int(im_input.shape[1]*display_size), int(im_input.shape[0]*display_size)))
-            #im_display = cv2.resize(im_input, (display_size, display_size))
+
+            im_alpha = im_display.copy()
+            cv2.rectangle(im_display, (0, im_display.shape[0]-80), (500, im_display.shape[0]), (0,0,0), -1)
+
+            im_display = cv2.addWeighted(im_display, 0.5, im_alpha, 0.5, 0)
 
             if first_process:
                 for p in pointing_targets:

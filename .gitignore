@@ -2,6 +2,7 @@
 data/*
 notebooks/data
 .vscode
+output.avi
 
 ##########
 

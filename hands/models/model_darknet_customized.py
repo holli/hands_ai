@@ -24,7 +24,7 @@ class ModelDarknetCustomized(torch.nn.Module):
         model = cls(num_classes=12, darknet_layers=[1,2,8,8,4], darknet_output=1024)
         h5path = models_path + 'hands_darknet_full_512_v01.pth'
         model.load_state_dict(torch.load(h5path))
-        model.default_size = 320
+        model.default_size = 512
         return model.eval()
 
 
