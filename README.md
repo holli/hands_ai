@@ -10,7 +10,8 @@ Recognizing hands and point direction in images.
   - e.g.
     - `python live_predict.py` - tries to use opencv camera input with defaults
     - `python live_predict.py -f example.avi` - using video file
-    - `python live_predict.py -i gstreamer -m 'ModelDarknetCustomized.load_default_04_416()' --cap_args 3 640 4 480  --img_size 320 416 --display-size 2 --display-size-screen 0.5` - using gstreamer input with custom image sizes. Good when predicting in Jetson tx2
+    - `python live_predict.py -i gstreamer -m 'ModelDarknetCustomized.load_default_03_320()' --cap_args 3 640 4 480  --img_size 320 416 --display-size 2 --display-size-screen 0.5` - using gstreamer input with custom image sizes. Good when predicting in Jetson tx2
+    - `python live_predict.py --display-size 2 -m 'ModelDarknetCustomized.load_default_full_512()'`- using bigger model
     - live predict also can use [phue-lib](https://github.com/studioimaginaire/phue) to control lights (example video below)
 
 ## Examples
