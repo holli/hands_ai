@@ -4,7 +4,7 @@ Recognizing hands and point direction in images.
 
 ## Usage
 
-- Requires Python>3.6, OpenCV2>3.4, Torch>1, Fastai lib
+- Requires Python>=3.6, OpenCV2>=3.4, PyTorch>=1, Fastai lib
 - Download pretrained models from http://www.ollihuotari.com/data/hands_ai/ and put them in data/models directory
 - see live predictions: `python live_predict.py --help`
   - e.g.
@@ -38,8 +38,8 @@ Recognizing hands and point direction in images.
 
 Data not available currently. Maybe some day. I'll have to clean it (I don't want to explain my nephew's mother why there is a video of her son pointing at things in the Internet.)
 
-- Data labeling related tools are at [label_tools](https://github.com/holli/hands_ai/tree/master/label_tools) folder.
 - For examples see [data_examples](https://github.com/holli/hands_ai/blob/master/notebooks/data_examples.ipynb)-notebook
+- Data labeling related tools are at [label_tools](https://github.com/holli/hands_ai/tree/master/label_tools) folder.
 - Basically I took some videos. Run them through hands_ai and [Chainer](https://github.com/DeNA/Chainer_Realtime_Multi-Person_Pose_Estimation) to get some pre made points. Go through video frame by frame. Opencv tracking to track points between frames. Then at each frame choose either one of the models, tracked points or manually clicking.
 
 

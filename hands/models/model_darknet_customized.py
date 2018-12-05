@@ -19,6 +19,17 @@ class ModelDarknetCustomized(torch.nn.Module):
         y = self.pre_0(x_b_full)
         return y
 
+    ###########################
+    # Full sizes
+
+    @classmethod
+    def load_default_full_416(cls, models_path='data/models/'):
+        model = cls(num_classes=12, darknet_layers=[1,2,8,8,4], darknet_output=1024)
+        h5path = models_path + 'hands_darknet_full_416_v01.pth'
+        model.load_state_dict(torch.load(h5path))
+        model.default_size = 416
+        return model.eval()
+
     @classmethod
     def load_default_full_512(cls, models_path='data/models/'):
         model = cls(num_classes=12, darknet_layers=[1,2,8,8,4], darknet_output=1024)
@@ -27,6 +38,16 @@ class ModelDarknetCustomized(torch.nn.Module):
         model.default_size = 512
         return model.eval()
 
+    @classmethod
+    def load_default_full_608(cls, models_path='data/models/'):
+        model = cls(num_classes=12, darknet_layers=[1,2,8,8,4], darknet_output=1024)
+        h5path = models_path + 'hands_darknet_full_608_v01.pth'
+        model.load_state_dict(torch.load(h5path))
+        model.default_size = 608
+        return model.eval()
+
+    ###########################
+    # Half sizes
 
     @classmethod
     def load_default_03_320(cls, models_path='data/models/'):
