@@ -30,7 +30,7 @@ Recognizing hands and point direction in images.
 
 - Check out [repo-notebooks](https://github.com/holli/hands_ai/tree/master/notebooks) to see how they were trained and how effetive they are
   - [model_darknet_full_01](https://github.com/holli/hands_ai/blob/master/notebooks/model_darknet_full_01.ipynb) - various sizes
-  - ... Smaller - Can be run in Jetson tx2 in realtime
+  - [model_darknet_half_01](https://github.com/holli/hands_ai/blob/master/notebooks/model_darknet_03_01.ipynb) - faster so it can be run in Jetson tx2 in realtime
 - Basically model is cnn which outputs (x, y, &#238;, &#309;, objectness, p_class_1, p_class_2, ...).
   - much like [Yolo](https://pjreddie.com/darknet/yolo/) but with angle instead of bounding boxes.
 
