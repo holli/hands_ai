@@ -23,7 +23,7 @@ class ModelDarknetCustomized(torch.nn.Module):
     # Full sizes
 
     @classmethod
-    def load_default_full_416(cls, models_path='data/models/'):
+    def load_full_416(cls, models_path='data/models/'):
         model = cls(num_classes=12, darknet_layers=[1,2,8,8,4], darknet_output=1024)
         h5path = models_path + 'hands_darknet_full_416_v01.pth'
         model.load_state_dict(torch.load(h5path))
@@ -31,7 +31,7 @@ class ModelDarknetCustomized(torch.nn.Module):
         return model.eval()
 
     @classmethod
-    def load_default_full_512(cls, models_path='data/models/'):
+    def load_full_512(cls, models_path='data/models/'):
         model = cls(num_classes=12, darknet_layers=[1,2,8,8,4], darknet_output=1024)
         h5path = models_path + 'hands_darknet_full_512_v01.pth'
         model.load_state_dict(torch.load(h5path))
@@ -39,7 +39,7 @@ class ModelDarknetCustomized(torch.nn.Module):
         return model.eval()
 
     @classmethod
-    def load_default_full_608(cls, models_path='data/models/'):
+    def load_full_608(cls, models_path='data/models/'):
         model = cls(num_classes=12, darknet_layers=[1,2,8,8,4], darknet_output=1024)
         h5path = models_path + 'hands_darknet_full_608_v01.pth'
         model.load_state_dict(torch.load(h5path))
@@ -50,13 +50,20 @@ class ModelDarknetCustomized(torch.nn.Module):
     # Half sizes
 
     @classmethod
-    def load_default_03_320(cls, models_path='data/models/'):
+    def load_03_320(cls, models_path='data/models/'):
         model = cls(num_classes=12, darknet_layers=[1,2,8], darknet_output=256)
-        h5path = models_path + 'hands_darknet_03_302_v01.pth'
+        h5path = models_path + 'hands_darknet_03_320_v01.pth'
         model.load_state_dict(torch.load(h5path))
         model.default_size = 320
         return model.eval()
 
+    @classmethod
+    def load_03_416(cls, models_path='data/models/'):
+        model = cls(num_classes=12, darknet_layers=[1,2,8], darknet_output=256)
+        h5path = models_path + 'hands_darknet_03_416_v01.pth'
+        model.load_state_dict(torch.load(h5path))
+        model.default_size = 416
+        return model.eval()
 
 
 ###################################################################

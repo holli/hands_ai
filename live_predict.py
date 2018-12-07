@@ -280,11 +280,11 @@ if __name__ == "__main__":
     # --cap_args 3 1280 4 720 --img_size 416 736
     # --cap_args 3 640 4 480 --img_size 320 416
 
-    default_model = "ModelDarknetCustomized.load_default_03_320()"
+    default_model = "ModelDarknetCustomized.load_full_416()"
 
     parser = argparse.ArgumentParser(description='Live prediction with hands models.')
     parser.add_argument('-i', '--input', default='cv2video0', help='cv2video0/9, gstreamer, file')#, default="cv2.VideoCapture(0)")
-    parser.add_argument('-m', '--model', help=f"Python command returning model, def:'{default_model}'", default=default_model)
+    parser.add_argument('-m', '--model', help=f"Python command returning model, def:'{default_model}', faster:'ModelDarknetCustomized.load_03_416()', slower:'ModelDarknetCustomized.load_full_512()'", default=default_model)
     parser.add_argument('-f', '--input-file', help='path to the file')
     parser.add_argument('--stabilize-frames', type=int, default=0, help="Only show predicts that are seen in this many previous frames")
     parser.add_argument('--no-display', action='store_true')
