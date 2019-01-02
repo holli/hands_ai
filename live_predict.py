@@ -288,7 +288,7 @@ if __name__ == "__main__":
     parser.add_argument('-f', '--input-file', help='path to the file')
     parser.add_argument('--stabilize-frames', type=int, default=0, help="Only show predicts that are seen in this many previous frames")
     parser.add_argument('--no-display', action='store_true')
-    parser.add_argument('--no-cuda', action='store_true')
+    parser.add_argument('--no-cuda', action='store_true', help="Set if you want to use cpu instead of gpu")
     #parser.add_argument('--display-size', type=int, default=448, help="window output size, def 448")
     parser.add_argument('--display-size', type=float, default=1.0, help="Video/Window output size compared to input size, def 1")
     parser.add_argument('--display-size-screen', type=float, default=1.0, help="Screen size compared to video, def 1")
