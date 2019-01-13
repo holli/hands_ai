@@ -8,7 +8,11 @@ class ModelDarknetCustomized(torch.nn.Module):
         self.num_classes = num_classes
 
         self.pre_0 = nn.Sequential(OrderedDict([
-            ('14_convbatch',    fastai.layers.conv_layer(darknet_output, 512, 3, 1)),
+            # same as : ('14_convbatch',    fastai.layers.conv_layer(darknet_output, 512, 3, 1)),
+            ('14_convbatch', nn.Sequential(
+                                    nn.Conv2d(darknet_output, 512, kernel_size=3, bias=False, stride=1, padding=3//2),
+                                    nn.BatchNorm2d(512),
+                                    nn.LeakyReLU(negative_slope=0.1, inplace=True))),
             # dx + dy + ax + ay + objectness + classes
             ('15_conv',         nn.Conv2d(512, 1*(5+self.num_classes), 1, 1, 0)),
         ]))
@@ -25,7 +29,7 @@ class ModelDarknetCustomized(torch.nn.Module):
     @classmethod
     def load_full_416(cls, models_path='data/models/'):
         model = cls(num_classes=12, darknet_layers=[1,2,8,8,4], darknet_output=1024)
-        h5path = models_path + 'hands_darknet_full_416_v01.pth'
+        h5path = models_path + 'hands_darknet_full_416_v02.pth'
         model.load_state_dict(torch.load(h5path))
         model.default_size = 416
         return model.eval()
@@ -33,7 +37,7 @@ class ModelDarknetCustomized(torch.nn.Module):
     @classmethod
     def load_full_512(cls, models_path='data/models/'):
         model = cls(num_classes=12, darknet_layers=[1,2,8,8,4], darknet_output=1024)
-        h5path = models_path + 'hands_darknet_full_512_v01.pth'
+        h5path = models_path + 'hands_darknet_full_512_v02.pth'
         model.load_state_dict(torch.load(h5path))
         model.default_size = 512
         return model.eval()
@@ -41,7 +45,7 @@ class ModelDarknetCustomized(torch.nn.Module):
     @classmethod
     def load_full_608(cls, models_path='data/models/'):
         model = cls(num_classes=12, darknet_layers=[1,2,8,8,4], darknet_output=1024)
-        h5path = models_path + 'hands_darknet_full_608_v01.pth'
+        h5path = models_path + 'hands_darknet_full_608_v02.pth'
         model.load_state_dict(torch.load(h5path))
         model.default_size = 608
         return model.eval()
@@ -52,7 +56,7 @@ class ModelDarknetCustomized(torch.nn.Module):
     @classmethod
     def load_03_320(cls, models_path='data/models/'):
         model = cls(num_classes=12, darknet_layers=[1,2,8], darknet_output=256)
-        h5path = models_path + 'hands_darknet_03_320_v01.pth'
+        h5path = models_path + 'hands_darknet_03_320_v02.pth'
         model.load_state_dict(torch.load(h5path))
         model.default_size = 320
         return model.eval()
@@ -60,7 +64,7 @@ class ModelDarknetCustomized(torch.nn.Module):
     @classmethod
     def load_03_416(cls, models_path='data/models/'):
         model = cls(num_classes=12, darknet_layers=[1,2,8], darknet_output=256)
-        h5path = models_path + 'hands_darknet_03_416_v01.pth'
+        h5path = models_path + 'hands_darknet_03_416_v02.pth'
         model.load_state_dict(torch.load(h5path))
         model.default_size = 416
         return model.eval()

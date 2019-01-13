@@ -280,7 +280,7 @@ if __name__ == "__main__":
     # --cap_args 3 1280 4 720 --img_size 416 736
     # --cap_args 3 640 4 480 --img_size 320 416
 
-    default_model = "ModelDarknetCustomized.load_full_416()"
+    default_model = "ModelDarknetCustomized.load_03_416()"
 
     parser = argparse.ArgumentParser(description='Live prediction with hands models.')
     parser.add_argument('-i', '--input', default='cv2video0', help='cv2video0/9, gstreamer, file')#, default="cv2.VideoCapture(0)")
@@ -288,7 +288,7 @@ if __name__ == "__main__":
     parser.add_argument('-f', '--input-file', help='path to the file')
     parser.add_argument('--stabilize-frames', type=int, default=0, help="Only show predicts that are seen in this many previous frames")
     parser.add_argument('--no-display', action='store_true')
-    parser.add_argument('--no-cuda', action='store_true', help="Set if you want to use cpu instead of gpu")
+    parser.add_argument('--cuda', type=str, default='try_cuda', help="try_cuda/yes/no")
     #parser.add_argument('--display-size', type=int, default=448, help="window output size, def 448")
     parser.add_argument('--display-size', type=float, default=1.0, help="Video/Window output size compared to input size, def 1")
     parser.add_argument('--display-size-screen', type=float, default=1.0, help="Screen size compared to video, def 1")
@@ -302,7 +302,12 @@ if __name__ == "__main__":
 
     model_exec = 'model = ' + args.model
     exec(model_exec)
-    if not args.no_cuda: model.cuda()
+    cuda = False
+    if args.cuda == 'try_cuda':
+        if torch.cuda.is_available():
+            cuda = True
+    elif args.cuda == 'yes':
+        cuda = True
 
     if args.input_file:
         video_fname = args.input_file
@@ -340,7 +345,7 @@ if __name__ == "__main__":
 
     main(cap, model, display_size=args.display_size, display_size_screen=args.display_size_screen,
             display_output=(not args.no_display),
-            cuda=(not args.no_cuda), stabilize_frames_c=args.stabilize_frames,
+            cuda=cuda, stabilize_frames_c=args.stabilize_frames,
             record_fname=args.record_fname,
             )
 
